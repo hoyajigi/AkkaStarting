@@ -5,6 +5,7 @@ import akka.actor.Props;
 import akka.actor.UntypedActor;
 import akka.event.Logging;
 import akka.event.LoggingAdapter;
+import scala.Option;
 
 /**
  * 임의의 문자열 혹은 "pong" 메시지를 받으면 "ping" 메시지를 보내는 핑액터
@@ -28,5 +29,19 @@ public class PingActor extends UntypedActor {
         	pong.tell("ping", getSelf());
         }
 	}
-	
+
+	@Override
+	public void postStop() throws Exception {
+		log.info("postStop");
+	}
+
+	@Override
+	public void preRestart(Throwable reason, Option<Object> message) throws Exception {
+		log.info("preRestart");
+	}
+
+	@Override
+	public void postRestart(Throwable reason) throws Exception {
+		log.info("postRestart");
+	}
 }
